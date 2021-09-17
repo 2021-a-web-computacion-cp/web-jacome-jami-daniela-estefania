@@ -20,33 +20,35 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('suma/:numero1/:numero2') //Suma con get y query params
+  @Get('suma') //Suma con get y query params
   @HttpCode(200)
-  suma(@Param() params, @Req() req, @Res({ passthrough: true }) res) {
+  suma(@Query() params, @Req() req, @Res({ passthrough: true }) res) {
     const parametros = params;
 
     const numero1 = Number(parametros['numero1'].toString());
     const numero2 = Number(parametros['numero2'].toString());
-
     const resultadoSumaNumber: number = numero1 + numero2;
     const resultadoSuma = String(resultadoSumaNumber);
     const cookieSuma = req.cookies;
-    const numero = cookieSuma['Numero'];
+    const numero = cookieSuma['Total'];
     if (numero == undefined) {
       const res_new = 100 - resultadoSumaNumber;
       res.cookie(
-        'Numero', //Nombre
-        String(res_new), // Valor
+        'Total', //Nombre
+        100, // Valor
+        {
+          signed: true,
+        },
       );
-      cookieSuma['Numero'] = String(res_new);
+      cookieSuma['Total'] = String(res_new);
     } else {
       const res_new = Number(numero) - resultadoSumaNumber;
       if (res_new > 0) {
-        cookieSuma['Numero'] = String(res_new);
-        res.cookie('Numero', String(res_new));
+        cookieSuma['Total'] = String(res_new);
+        res.cookie('Total', String(res_new));
       } else {
-        res.cookie('Numero', '100');
-        cookieSuma['Numero'] = '100';
+        res.cookie('Total', '100');
+        cookieSuma['Total'] = '100';
         res.send('Terminaste el juego');
       }
     }
@@ -73,22 +75,25 @@ export class AppController {
     const resultadoRestaNumber: number = numero1 - numero2;
     const resultadoResta = String(resultadoRestaNumber);
     const cookieResta = req.cookies;
-    const numero = cookieResta['Numero'];
+    const numero = cookieResta['Total'];
     if (numero == undefined) {
       const res_new = 100 - resultadoRestaNumber;
       res.cookie(
-        'Numero', //Nombre
-        String(res_new), // Valor
+        'Total', //Nombre
+        100, // Valor
+        {
+          signed: true,
+        },
       );
-      cookieResta['Numero'] = String(res_new);
+      cookieResta['Total'] = String(res_new);
     } else {
       const res_new = Number(numero) - resultadoRestaNumber;
       if (res_new > 0) {
-        cookieResta['Numero'] = String(res_new);
-        res.cookie('Numero', String(res_new));
+        cookieResta['Total'] = String(res_new);
+        res.cookie('Total', String(res_new));
       } else {
-        res.cookie('Numero', '100');
-        cookieResta['Numero'] = '100';
+        res.cookie('Total', '100');
+        cookieResta['Total'] = '100';
         res.send('Terminaste el juego');
       }
     }
@@ -110,22 +115,25 @@ export class AppController {
     const resultadoMultiplicacionNumber: number = numero1 * numero2;
     const resultadoMultiplicacion = String(resultadoMultiplicacionNumber);
     const cookieMultiplicacion = req.cookies;
-    const numero = cookieMultiplicacion['Numero'];
+    const numero = cookieMultiplicacion['Total'];
     if (numero == undefined) {
       const res_new = 100 - resultadoMultiplicacionNumber;
       res.cookie(
-        'Numero', //Nombre
-        String(res_new), // Valor
+        'Total', //Nombre
+        100, // Valor
+        {
+          signed: true,
+        },
       );
-      cookieMultiplicacion['Numero'] = String(res_new);
+      cookieMultiplicacion['Total'] = String(res_new);
     } else {
       const res_new = Number(numero) - resultadoMultiplicacionNumber;
       if (res_new > 0) {
-        cookieMultiplicacion['Numero'] = String(res_new);
-        res.cookie('Numero', String(res_new));
+        cookieMultiplicacion['Total'] = String(res_new);
+        res.cookie('Total', String(res_new));
       } else {
-        res.cookie('Numero', '100');
-        cookieMultiplicacion['Numero'] = '100';
+        res.cookie('Total', '100');
+        cookieMultiplicacion['Total'] = '100';
         res.send('Terminaste el juego');
       }
     }
@@ -147,22 +155,25 @@ export class AppController {
     const resultadoDivisionNumber: number = numero1 / numero2;
     const resultadoDivision = String(resultadoDivisionNumber);
     const cookieDivision = req.cookies;
-    const numero = cookieDivision['Numero'];
+    const numero = cookieDivision['Total'];
     if (numero == undefined) {
       const res_new = 100 - resultadoDivisionNumber;
       res.cookie(
-        'Numero', //Nombre
-        String(res_new), // Valor
+        'Total', //Nombre
+        100, // Valor
+        {
+          signed: true,
+        },
       );
-      cookieDivision['Numero'] = String(res_new);
+      cookieDivision['Total'] = String(res_new);
     } else {
       const res_new = Number(numero) - resultadoDivisionNumber;
       if (res_new > 0) {
-        cookieDivision['Numero'] = String(res_new);
-        res.cookie('Numero', String(res_new));
+        cookieDivision['Total'] = String(res_new);
+        res.cookie('Total', String(res_new));
       } else {
-        res.cookie('Numero', '100');
-        cookieDivision['Numero'] = '100';
+        res.cookie('Total', '100');
+        cookieDivision['Total'] = '100';
         res.send('Terminaste el juego');
       }
     }
