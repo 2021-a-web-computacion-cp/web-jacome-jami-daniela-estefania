@@ -1,0 +1,60 @@
+
+
+<%- include('./comunes/cabecera') %>
+
+<h1>Hola mundo</h1>
+
+<!-- <% %> Todo lo que esta dentro de esto es JS -->
+<!-- MOSTRAR = -->
+<p><%= "Hola" %></p>
+<p><%= 15 %></p>
+<!-- Ejecutar  -->
+<% const adrian = {nombre: "Adrian", apellido: "Eguez", cedula: "17"} %>
+<% const numero = 25 %>
+<% const mensaje = "Hola" %>
+<!-- Ejemplo  -->
+<p><%= adrian.nombre %> <%= numero %> <%= mensaje %></p>
+
+<!-- Condicional if  -->
+<% const aprobado = true %>
+
+<% if(aprobado){ %>
+    <p>Aprobado!</p>
+<% } else { %>
+    <p>Rechazado</p>
+<% } %>
+
+<!-- Arreglo  -->
+<% const arregloNumeros = [1, 2, 3, 4, 5] %>
+
+<!-- Itera Arreglo  -->
+<ul>
+    <% arregloNumeros.forEach( (objeto) => { %>
+        <li><%= objeto %></li>
+    <% } ) %>
+</ul>
+
+<%- include('./comunes/footer') %>
+
+<!--
+<!doctype html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Aplicacion Web</title>
+</head>
+<body>
+<ul>
+    <li>Inicio</li>
+    <li>Usuario</li>
+</ul>
+<p>Derechos EPN</p>
+</body>
+</html>
+-->
+
+
+
+

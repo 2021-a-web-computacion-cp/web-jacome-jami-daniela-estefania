@@ -29,26 +29,23 @@ export class AppController {
     const numero2 = Number(parametros['numero2'].toString());
     const resultadoSumaNumber: number = numero1 + numero2;
     const resultadoSuma = String(resultadoSumaNumber);
-    const cookieSuma = req.cookies;
-    const numero = cookieSuma['Total'];
+    const cookie = req.cookies;
+    const numero = cookie['Total'];
     if (numero == undefined) {
       const res_new = 100 - resultadoSumaNumber;
       res.cookie(
         'Total', //Nombre
         100, // Valor
-        {
-          signed: true,
-        },
       );
-      cookieSuma['Total'] = String(res_new);
+      cookie['Total'] = String(res_new);
     } else {
       const res_new = Number(numero) - resultadoSumaNumber;
       if (res_new > 0) {
-        cookieSuma['Total'] = String(res_new);
+        cookie['Total'] = String(res_new);
         res.cookie('Total', String(res_new));
       } else {
         res.cookie('Total', '100');
-        cookieSuma['Total'] = '100';
+        cookie['Total'] = '100';
         res.send('Terminaste el juego');
       }
     }
@@ -56,7 +53,7 @@ export class AppController {
     return {
       parametros,
       resultadoSuma,
-      cookieSuma,
+      cookie,
     };
   }
 
@@ -74,26 +71,23 @@ export class AppController {
 
     const resultadoRestaNumber: number = numero1 - numero2;
     const resultadoResta = String(resultadoRestaNumber);
-    const cookieResta = req.cookies;
-    const numero = cookieResta['Total'];
+    const cookie = req.cookies;
+    const numero = cookie['Total'];
     if (numero == undefined) {
       const res_new = 100 - resultadoRestaNumber;
       res.cookie(
         'Total', //Nombre
-        100, // Valor
-        {
-          signed: true,
-        },
+        100, // Valor,
       );
-      cookieResta['Total'] = String(res_new);
+      cookie['Total'] = String(res_new);
     } else {
       const res_new = Number(numero) - resultadoRestaNumber;
       if (res_new > 0) {
-        cookieResta['Total'] = String(res_new);
+        cookie['Total'] = String(res_new);
         res.cookie('Total', String(res_new));
       } else {
         res.cookie('Total', '100');
-        cookieResta['Total'] = '100';
+        cookie['Total'] = '100';
         res.send('Terminaste el juego');
       }
     }
@@ -101,7 +95,7 @@ export class AppController {
     return {
       parametros,
       resultadoResta,
-      cookieResta,
+      cookie,
     };
   }
 
@@ -114,26 +108,23 @@ export class AppController {
 
     const resultadoMultiplicacionNumber: number = numero1 * numero2;
     const resultadoMultiplicacion = String(resultadoMultiplicacionNumber);
-    const cookieMultiplicacion = req.cookies;
-    const numero = cookieMultiplicacion['Total'];
+    const cookie = req.cookies;
+    const numero = cookie['Total'];
     if (numero == undefined) {
       const res_new = 100 - resultadoMultiplicacionNumber;
       res.cookie(
         'Total', //Nombre
         100, // Valor
-        {
-          signed: true,
-        },
       );
-      cookieMultiplicacion['Total'] = String(res_new);
+      cookie['Total'] = String(res_new);
     } else {
       const res_new = Number(numero) - resultadoMultiplicacionNumber;
       if (res_new > 0) {
-        cookieMultiplicacion['Total'] = String(res_new);
+        cookie['Total'] = String(res_new);
         res.cookie('Total', String(res_new));
       } else {
         res.cookie('Total', '100');
-        cookieMultiplicacion['Total'] = '100';
+        cookie['Total'] = '100';
         res.send('Terminaste el juego');
       }
     }
@@ -141,7 +132,7 @@ export class AppController {
     return {
       parametros,
       resultadoMultiplicacion,
-      cookieMultiplicacion,
+      cookie,
     };
   }
 
@@ -154,26 +145,23 @@ export class AppController {
 
     const resultadoDivisionNumber: number = numero1 / numero2;
     const resultadoDivision = String(resultadoDivisionNumber);
-    const cookieDivision = req.cookies;
-    const numero = cookieDivision['Total'];
+    const cookie = req.cookies;
+    const numero = cookie['Total'];
     if (numero == undefined) {
       const res_new = 100 - resultadoDivisionNumber;
       res.cookie(
         'Total', //Nombre
         100, // Valor
-        {
-          signed: true,
-        },
       );
-      cookieDivision['Total'] = String(res_new);
+      cookie['Total'] = String(res_new);
     } else {
       const res_new = Number(numero) - resultadoDivisionNumber;
       if (res_new > 0) {
-        cookieDivision['Total'] = String(res_new);
+        cookie['Total'] = String(res_new);
         res.cookie('Total', String(res_new));
       } else {
         res.cookie('Total', '100');
-        cookieDivision['Total'] = '100';
+        cookie['Total'] = '100';
         res.send('Terminaste el juego');
       }
     }
@@ -181,7 +169,7 @@ export class AppController {
     return {
       parametros,
       resultadoDivision,
-      cookieDivision,
+      cookie,
     };
   }
 
