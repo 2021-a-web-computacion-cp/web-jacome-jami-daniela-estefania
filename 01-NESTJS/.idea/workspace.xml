@@ -27,15 +27,20 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/web/views/ropa" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="ts.external.directory.path" value="C:\Users\Danny\OneDrive - Escuela Politécnica Nacional\Universidad\2021 A\Aplicaciones Web\Repositorio\web-jacome-jami-daniela-estefania\01-NESTJS\web\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Danny\OneDrive - Escuela Politécnica Nacional\Universidad\2021 A\Aplicaciones Web\Repositorio\web-jacome-jami-daniela-estefania\01-NESTJS\web\views\ropa" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -58,6 +63,10 @@
       <workItem from="1632818270498" duration="4290000" />
       <workItem from="1632824898262" duration="6868000" />
       <workItem from="1632838089426" duration="22841000" />
+      <workItem from="1632931843292" duration="4582000" />
+      <workItem from="1632936485143" duration="10252000" />
+      <workItem from="1632947435591" duration="5287000" />
+      <workItem from="1632952784164" duration="6130000" />
     </task>
     <servers />
   </component>
@@ -71,6 +80,11 @@
           <url>file://$PROJECT_DIR$/web/src/main.ts</url>
           <line>18</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/web/src/usuario/usuario.service.ts</url>
+          <line>22</line>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

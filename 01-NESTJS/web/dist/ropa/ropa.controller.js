@@ -12,32 +12,32 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsuarioController = void 0;
+exports.RopaController = void 0;
 const common_1 = require("@nestjs/common");
-const usuario_service_1 = require("./usuario.service");
-const usuario_crear_dto_1 = require("./dto/usuario-crear.dto");
+const ropa_service_1 = require("./ropa.service");
+const ropa_crear_dto_1 = require("./dto/ropa-crear.dto");
 const class_validator_1 = require("class-validator");
-let UsuarioController = class UsuarioController {
-    constructor(usuarioService) {
-        this.usuarioService = usuarioService;
+let RopaController = class RopaController {
+    constructor(ropaService) {
+        this.ropaService = ropaService;
     }
     inicio(response) {
         response.render('inicio');
     }
-    async listaUsuarios(response, parametrosConsulta) {
+    async listaRopa(response, parametrosConsulta) {
         try {
-            const respuesta = await this.usuarioService.buscarMuchos({
+            const respuesta = await this.ropaService.buscarMuchos({
                 skip: parametrosConsulta.skip ? +parametrosConsulta.skip : undefined,
                 take: parametrosConsulta.take ? +parametrosConsulta.take : undefined,
                 busqueda: parametrosConsulta.busqueda
                     ? parametrosConsulta.busqueda
                     : undefined,
             });
-            console.log('lista usuario' + true);
+            console.log('IMPRIMIR');
             console.log(respuesta);
-            response.render('usuario/lista', {
+            response.render('ropa/lista', {
                 datos: {
-                    usuarios: respuesta,
+                    ropa: respuesta,
                     mensaje: parametrosConsulta.mensaje,
                 },
             });
@@ -46,34 +46,44 @@ let UsuarioController = class UsuarioController {
             throw new common_1.InternalServerErrorException('Error del servidor');
         }
     }
-    vistaCrear(response, qqueryParams) {
-        response.render('usuario/crear', {
+    vistaCrear(response, queryParams) {
+        response.render('ropa/crear', {
             datos: {
-                mensaje: qqueryParams.mensaje,
+                mensaje: queryParams.mensaje,
             },
         });
     }
-    async crearUsuario(response, bodyParams) {
+    async crearRopa(response, bodyParams) {
+        let sexo = false;
+        if (bodyParams.sexo == 'Femenino') {
+            sexo = true;
+        }
         try {
-            const userRes = await this.usuarioService.crearUno({
-                nombre: bodyParams.nombre,
-                apellido: bodyParams.apellido,
+            const ropaRes = await this.ropaService.crearUno({
+                tipoRopa: bodyParams.tipoRopa,
+                talla: bodyParams.talla,
+                marca: bodyParams.marca,
+                sexo: sexo,
+                color: bodyParams.color,
+                precio: Number(bodyParams.precio),
+                stock: Number(bodyParams.stock),
             });
-            response.redirect('/usuario/vista-crear' +
-                '?mensaje=Se creo el usuario ' +
-                bodyParams.nombre);
-            console.log('USUARIO FORMULARIO');
+            response.redirect('/ropa/vista-crear' +
+                '?mensaje=Se ingreso exitosamente la prenda ' +
+                bodyParams.tipoRopa);
+            console.log(ropaRes);
+            console.log('ROPA FORMULARIO');
         }
         catch (e) {
             console.log(e);
             throw new common_1.InternalServerErrorException(e);
         }
     }
-    async elminarUsuario(response, routeParams) {
+    async elminarRopa(response, routeParams) {
         try {
-            await this.usuarioService.eliminarUno(+routeParams.idUsuario);
-            response.redirect('/usuario/lista-usuarios' + '?mensaje=Se elimino el usuario');
-            console.log('ELIMINAR USUARIO');
+            await this.ropaService.eliminarUno(+routeParams.idRopa);
+            response.redirect('/ropa/lista-ropa' + '?mensaje=Se eliminó prenda seleccionada');
+            console.log('eLIMINAT ROPA');
         }
         catch (e) {
             console.log(e);
@@ -81,36 +91,44 @@ let UsuarioController = class UsuarioController {
         }
     }
     obtenerUno(parametrosRuta) {
-        console.log('obtenerUno' + parametrosRuta.idUsuario);
-        return this.usuarioService.buscarUno(+parametrosRuta.idUsuario);
+        return this.ropaService.buscarUno(+parametrosRuta.idRopa);
     }
-    actualizarUno(bodyParams, paramRuta) {
-        return this.usuarioService.actualizarUno({
-            id: +paramRuta.idUsuario,
+    actualizarRopa(bodyParams, paramRuta) {
+        return this.ropaService.actualizarUno({
+            id: +paramRuta.idRopa,
             data: bodyParams,
         });
     }
-    eliminarUno(paramRuta) {
-        const id = Number(paramRuta.idUsuario);
-        return this.usuarioService.eliminarUno(id);
+    eliminarRopa(paramRuta) {
+        const id = Number(paramRuta.idRopa);
+        return this.ropaService.eliminarUno(id);
     }
     async crearUno(bodyParams) {
-        const usuarioCrearDto = new usuario_crear_dto_1.UsuarioCrearDto();
-        usuarioCrearDto.nombre = bodyParams.nombre;
-        usuarioCrearDto.apellido = bodyParams.apellido;
-        usuarioCrearDto.fechaCreacion = bodyParams.fechaCreacion;
+        let sexo = false;
+        if (bodyParams.sexo == 'Femenino') {
+            sexo = true;
+        }
+        const ropaCrearDto = new ropa_crear_dto_1.RopaCrearDto();
+        ropaCrearDto.tipoRopa = bodyParams.tipoRopa;
+        ropaCrearDto.talla = bodyParams.talla;
+        ropaCrearDto.marca = bodyParams.marca;
+        ropaCrearDto.sexo = sexo;
+        ropaCrearDto.color = bodyParams.color;
+        ropaCrearDto.precio = bodyParams.precio.toNumber();
+        ropaCrearDto.stock = bodyParams.stock.toNumber();
+        ropaCrearDto.fecha = bodyParams.fecha;
         try {
-            const errores = await (0, class_validator_1.validate)(usuarioCrearDto);
+            const errores = await (0, class_validator_1.validate)(ropaCrearDto);
             if (errores.length > 0) {
                 console.log(JSON.stringify(errores));
                 throw new common_1.BadRequestException('No envia bien parametros');
             }
             else {
-                return this.usuarioService.crearUno(usuarioCrearDto);
+                return this.ropaService.crearUno(ropaCrearDto);
             }
         }
         catch (error) {
-            console.error({ error: error, mensaje: 'Errores en crear usuario' });
+            console.error({ error: error, mensaje: 'Errores en ingresar ropa' });
             throw new common_1.InternalServerErrorException('Error servidor');
         }
     }
@@ -121,15 +139,15 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], UsuarioController.prototype, "inicio", null);
+], RopaController.prototype, "inicio", null);
 __decorate([
-    (0, common_1.Get)('lista-usuarios'),
+    (0, common_1.Get)('lista-ropa'),
     __param(0, (0, common_1.Res)()),
     __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
-], UsuarioController.prototype, "listaUsuarios", null);
+], RopaController.prototype, "listaRopa", null);
 __decorate([
     (0, common_1.Get)('vista-crear'),
     __param(0, (0, common_1.Res)()),
@@ -137,55 +155,55 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
-], UsuarioController.prototype, "vistaCrear", null);
+], RopaController.prototype, "vistaCrear", null);
 __decorate([
-    (0, common_1.Post)('crear-usuario-formulario'),
+    (0, common_1.Post)('crear-ropa-formulario'),
     __param(0, (0, common_1.Res)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
-], UsuarioController.prototype, "crearUsuario", null);
+], RopaController.prototype, "crearRopa", null);
 __decorate([
-    (0, common_1.Post)('eliminar-usuario/:idUsuario'),
+    (0, common_1.Post)('eliminar-ropa/:idRopa'),
     __param(0, (0, common_1.Res)()),
     __param(1, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
-], UsuarioController.prototype, "elminarUsuario", null);
+], RopaController.prototype, "elminarRopa", null);
 __decorate([
-    (0, common_1.Get)(':idUsuario'),
+    (0, common_1.Get)(':idRopa'),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], UsuarioController.prototype, "obtenerUno", null);
+], RopaController.prototype, "obtenerUno", null);
 __decorate([
-    (0, common_1.Put)(':idUsuario'),
+    (0, common_1.Put)(':idRopa'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
-], UsuarioController.prototype, "actualizarUno", null);
+], RopaController.prototype, "actualizarRopa", null);
 __decorate([
-    (0, common_1.Delete)(':idUsuario'),
+    (0, common_1.Delete)(':idRopa'),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], UsuarioController.prototype, "eliminarUno", null);
+], RopaController.prototype, "eliminarRopa", null);
 __decorate([
     (0, common_1.Post)('crear'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], UsuarioController.prototype, "crearUno", null);
-UsuarioController = __decorate([
-    (0, common_1.Controller)('usuario'),
-    __metadata("design:paramtypes", [usuario_service_1.UsuarioService])
-], UsuarioController);
-exports.UsuarioController = UsuarioController;
-//# sourceMappingURL=usuario.controller.js.map
+], RopaController.prototype, "crearUno", null);
+RopaController = __decorate([
+    (0, common_1.Controller)('ropa'),
+    __metadata("design:paramtypes", [ropa_service_1.RopaService])
+], RopaController);
+exports.RopaController = RopaController;
+//# sourceMappingURL=ropa.controller.js.map

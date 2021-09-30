@@ -7,9 +7,9 @@ export declare class UsuarioController {
     listaUsuarios(response: any, parametrosConsulta: any): Promise<void>;
     vistaCrear(response: any, qqueryParams: any): void;
     crearUsuario(response: any, bodyParams: any): Promise<void>;
-    obtenerUno(parametrosRuta: any): Prisma.Prisma__EPN_USUARIOClient<import(".prisma/client").EPN_USUARIO>;
     elminarUsuario(response: any, routeParams: any): Promise<void>;
-    crearUno(bodyParams: any): Promise<import(".prisma/client").EPN_USUARIO>;
+    obtenerUno(parametrosRuta: any): Prisma.Prisma__EPN_USUARIOClient<import(".prisma/client").EPN_USUARIO>;
     actualizarUno(bodyParams: any, paramRuta: any): Prisma.Prisma__EPN_USUARIOClient<import(".prisma/client").EPN_USUARIO>;
     eliminarUno(paramRuta: any): Prisma.Prisma__EPN_USUARIOClient<import(".prisma/client").EPN_USUARIO>;
+    crearUno(bodyParams: any): Promise<import(".prisma/client").EPN_USUARIO>;
 }

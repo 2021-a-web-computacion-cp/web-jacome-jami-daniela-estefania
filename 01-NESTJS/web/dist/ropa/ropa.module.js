@@ -6,32 +6,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.RopaModule = void 0;
 const common_1 = require("@nestjs/common");
-const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
-const prisma_service_1 = require("./prisma.service");
-const usuario_module_1 = require("./usuario/usuario.module");
-const ropa_module_1 = require("./ropa/ropa.module");
-let AppModule = class AppModule {
+const ropa_service_1 = require("./ropa.service");
+const prisma_service_1 = require("../prisma.service");
+const ropa_controller_1 = require("./ropa.controller");
+let RopaModule = class RopaModule {
 };
-AppModule = __decorate([
+RopaModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            usuario_module_1.UsuarioModule,
-            ropa_module_1.RopaModule,
+        imports: [],
+        providers: [ropa_service_1.RopaService, prisma_service_1.PrismaService],
+        exports: [
+            ropa_service_1.RopaService,
         ],
         controllers: [
-            app_controller_1.AppController,
-        ],
-        providers: [
-            app_service_1.AppService,
-            prisma_service_1.PrismaService,
-        ],
-        exports: [
-            app_service_1.AppService,
+            ropa_controller_1.RopaController,
         ],
     })
-], AppModule);
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+], RopaModule);
+exports.RopaModule = RopaModule;
+//# sourceMappingURL=ropa.module.js.map

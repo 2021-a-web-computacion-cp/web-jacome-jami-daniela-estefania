@@ -29,13 +29,13 @@ export class UsuarioController {
     response.render('inicio');
   }
 
-  @Get('lista-usuarios')
+  @Get('lista-usuarios') //!! BUSCAR - IMPLIMIR LISTA
   /*listaUsuarios(@Res() response) {
     response.render('usuario/lista');
   }*/
   async listaUsuarios(@Res() response, @Query() parametrosConsulta) {
     try {
-      //Validar parametros de consulta con un DTO (TODO)
+      //Validar parametros de consulta con un dto (TODO)
       const respuesta = await this.usuarioService.buscarMuchos({
         skip: parametrosConsulta.skip ? +parametrosConsulta.skip : undefined,
         take: parametrosConsulta.take ? +parametrosConsulta.take : undefined,
@@ -43,6 +43,7 @@ export class UsuarioController {
           ? parametrosConsulta.busqueda
           : undefined,
       });
+      console.log('lista usuario' + true);
       console.log(respuesta);
       response.render('usuario/lista', {
         datos: {
@@ -64,7 +65,7 @@ export class UsuarioController {
     });
   }
 
-  @Post('crear-usuario-formulario')
+  @Post('crear-usuario-formulario') //!! CREAR
   async crearUsuario(@Res() response, @Body() bodyParams) {
     //si se usa el response no debe utilizar return
     try {
@@ -78,28 +79,46 @@ export class UsuarioController {
           '?mensaje=Se creo el usuario ' +
           bodyParams.nombre,
       );
+      console.log('USUARIO FORMULARIO');
     } catch (e) {
       console.log(e);
       throw new InternalServerErrorException(e);
     }
   }
 
-  @Get(':idUsuario')
-  obtenerUno(@Param() parametrosRuta) {
-    return this.usuarioService.buscarUno(+parametrosRuta.idUsuario);
-  }
-
-  @Post('eliminar-usuario/:idUsuario')
+  @Post('eliminar-usuario/:idUsuario') //!!ELIMINAR
   async elminarUsuario(@Res() response, @Param() routeParams) {
     try {
       await this.usuarioService.eliminarUno(+routeParams.idUsuario);
       response.redirect(
         '/usuario/lista-usuarios' + '?mensaje=Se elimino el usuario',
       );
+      console.log('ELIMINAR USUARIO');
     } catch (e) {
       console.log(e);
       throw new InternalServerErrorException(e);
     }
+  }
+  //*********************************************
+  @Get(':idUsuario')
+  obtenerUno(@Param() parametrosRuta) {
+    console.log('obtenerUno' + parametrosRuta.idUsuario);
+    return this.usuarioService.buscarUno(+parametrosRuta.idUsuario);
+  }
+
+  //actualizar
+  @Put(':idUsuario')
+  actualizarUno(@Body() bodyParams, @Param() paramRuta) {
+    return this.usuarioService.actualizarUno({
+      id: +paramRuta.idUsuario,
+      data: bodyParams,
+    });
+  }
+
+  @Delete(':idUsuario')
+  eliminarUno(@Param() paramRuta) {
+    const id = Number(paramRuta.idUsuario);
+    return this.usuarioService.eliminarUno(id);
   }
 
   @Post('crear')
@@ -122,21 +141,5 @@ export class UsuarioController {
       console.error({ error: error, mensaje: 'Errores en crear usuario' });
       throw new InternalServerErrorException('Error servidor');
     }
-  }
-
-  //actualizar
-  @Put(':idUsuario')
-  actualizarUno(@Body() bodyParams, @Param() paramRuta) {
-    return this.usuarioService.actualizarUno({
-      id: +paramRuta.idUsuario,
-      data: bodyParams,
-    });
-  }
-
-  @Delete(':idUsuario')
-  eliminarUno(@Param() paramRuta) {
-    const id = Number(paramRuta.idUsuario);
-
-    return this.usuarioService.eliminarUno(id);
   }
 }
