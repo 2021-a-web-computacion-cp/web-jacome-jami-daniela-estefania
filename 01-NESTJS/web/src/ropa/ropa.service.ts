@@ -44,6 +44,7 @@ export class RopaService {
     skip?: number; //Registros que te saltas
     take?: number; //Registros que tomas
     busqueda?: string; // Lo que el usuario busca
+    // orderBy?: Prisma.EPN_UsuarioOrder;
   }) {
     const or = parametrosBusqueda.busqueda
       ? {
@@ -51,16 +52,16 @@ export class RopaService {
             { tipoRopa: { contains: parametrosBusqueda.busqueda } },
             { talla: { contains: parametrosBusqueda.busqueda } },
             { marca: { contains: parametrosBusqueda.busqueda } },
-            { sexo: { contains: parametrosBusqueda.busqueda } },
+            // { sexo: { contains: parametrosBusqueda.busqueda } },
             { color: { contains: parametrosBusqueda.busqueda } },
-            { stock: { contains: parametrosBusqueda.busqueda } },
-            { precio: { contains: parametrosBusqueda.busqueda } },
-            { fecha: { contains: parametrosBusqueda.busqueda } },
+            //   { stock: { contains: parametrosBusqueda.busqueda } },
+            //   { precio: { contains: parametrosBusqueda.busqueda } },
+            //   { fecha: { contains: parametrosBusqueda.busqueda } },
           ],
         }
       : {};
     return this.prisma.ropa.findMany({
-      //    where: or,
+      where: or,
       take: Number(parametrosBusqueda.take) || undefined,
       skip: Number(parametrosBusqueda.skip) || undefined,
     });

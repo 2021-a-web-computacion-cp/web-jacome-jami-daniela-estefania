@@ -47,6 +47,7 @@ let RopaController = class RopaController {
         }
     }
     vistaCrear(response, queryParams) {
+        console.log('VISTA CREAR');
         response.render('ropa/crear', {
             datos: {
                 mensaje: queryParams.mensaje,
@@ -71,8 +72,8 @@ let RopaController = class RopaController {
             response.redirect('/ropa/vista-crear' +
                 '?mensaje=Se ingreso exitosamente la prenda ' +
                 bodyParams.tipoRopa);
-            console.log(ropaRes);
             console.log('ROPA FORMULARIO');
+            console.log(ropaRes);
         }
         catch (e) {
             console.log(e);
@@ -88,6 +89,78 @@ let RopaController = class RopaController {
         catch (e) {
             console.log(e);
             throw new common_1.InternalServerErrorException(e);
+        }
+    }
+    async vistaActualizar(response, parametrosRuta) {
+        try {
+            const respuesta = await this.ropaService.buscarUno(+parametrosRuta.idRopa);
+            console.log('VISTA EDITAR');
+            console.log(respuesta);
+            response.render('ropa/editar', {
+                datos: {
+                    ropa: respuesta,
+                },
+            });
+        }
+        catch (error) {
+            console.error(error);
+            throw new common_1.InternalServerErrorException('Error');
+        }
+    }
+    async editarRopa(parametrosRuta, bodyParams, response) {
+        let sexo = false;
+        if (bodyParams.sexo == 'Femenino') {
+            sexo = true;
+        }
+        console.log('EDITAR');
+        const id = +parametrosRuta.idRopa;
+        const fecha = new Date();
+        const ropaCrearDto = new ropa_crear_dto_1.RopaCrearDto();
+        ropaCrearDto.tipoRopa = bodyParams.tipoRopa;
+        ropaCrearDto.talla = bodyParams.talla;
+        ropaCrearDto.marca = bodyParams.marca;
+        ropaCrearDto.sexo = sexo;
+        ropaCrearDto.color = bodyParams.color;
+        ropaCrearDto.precio = Number(bodyParams.precio);
+        ropaCrearDto.stock = Number(bodyParams.stock);
+        ropaCrearDto.fecha = new Date(bodyParams.fecha);
+        console.log(typeof ropaCrearDto.precio);
+        console.log(typeof ropaCrearDto.stock);
+        console.log(typeof ropaCrearDto.sexo);
+        console.log(typeof ropaCrearDto.fecha);
+        console.log(ropaCrearDto.sexo);
+        console.log(ropaCrearDto.fecha);
+        try {
+            const errores = await (0, class_validator_1.validate)(ropaCrearDto);
+            console.log(errores.length);
+            if (errores.length > 0) {
+                console.error('Error', errores);
+                return response.redirect('/ropa/lista-ropa/' + '?mensaje=Error validando datos');
+            }
+            else {
+                const data = {
+                    tipoRopa: ropaCrearDto.tipoRopa,
+                    talla: ropaCrearDto.talla,
+                    marca: ropaCrearDto.marca,
+                    sexo: ropaCrearDto.sexo,
+                    color: ropaCrearDto.color,
+                    precio: Number(ropaCrearDto.precio),
+                    stock: Number(ropaCrearDto.stock),
+                    fecha: new Date(ropaCrearDto.fecha),
+                };
+                await this.ropaService.actualizarUno({
+                    id: id,
+                    data: data,
+                });
+                response.redirect('/ropa/lista-ropa' +
+                    '?mensaje= Se actualizó exitosamente la prenda ' +
+                    '' +
+                    bodyParams.tipoRopa);
+            }
+        }
+        catch (e) {
+            console.error({ error: e, mensaje: 'Errores en editar la prenda' });
+            throw new common_1.InternalServerErrorException('error de servidor');
         }
     }
     obtenerUno(parametrosRuta) {
@@ -172,6 +245,23 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], RopaController.prototype, "elminarRopa", null);
+__decorate([
+    (0, common_1.Post)('vista-editar/:idRopa'),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], RopaController.prototype, "vistaActualizar", null);
+__decorate([
+    (0, common_1.Post)('editar-ropa-formulario/:idRopa'),
+    __param(0, (0, common_1.Param)()),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:returntype", Promise)
+], RopaController.prototype, "editarRopa", null);
 __decorate([
     (0, common_1.Get)(':idRopa'),
     __param(0, (0, common_1.Param)()),

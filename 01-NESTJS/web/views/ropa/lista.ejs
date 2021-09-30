@@ -21,9 +21,9 @@
                    type="text"
                    name="busqueda"
                    class="form-control"
-                   id="busqueda"
-                   aria-describedby="ayudaBusqueda">
-            <div id="ayudaBusqueda" class="form-text">
+                   id="busquedaRopa"
+                   aria-describedby="ayudaBusquedaRopa">
+            <div id="ayudaBusquedaRopa" class="form-text">
                 Puede buscar por marca o tipo de ropa.
             </div>
         </div>
@@ -31,18 +31,12 @@
     </form>
     <div>
         <a href='/ropa/vista-crear'>
-            <button class='btn btn-success'>
+            <button class='btn-block btn btn-success' >
                 Ingresar ropa
             </button>
         </a>
     </div>
-    <div>
-        <a href='/ropa/vista-editar'>
-            <button class='btn btn-success'>
-                Editar ropa
-            </button>
-        </a>
-    </div>
+
     <table class="table">
         <thead>
         <tr>
@@ -72,9 +66,15 @@
             <th><%= objeto.fecha %></th>
 
             <th>
+                <form   action='/ropa/vista-editar/<%= objeto.id %>'
+                        method='post'>
+                    <button class='btn btn-block btn-primary'>Editar</button>
+                </form>
+            </th>
+            <th>
                 <form   action='/ropa/eliminar-ropa/<%= objeto.id %>'
                         method='post'>
-                    <button class='btn btn-danger'>Eliminar</button>
+                    <button class='btn btn-block btn-danger'>Eliminar</button>
                 </form>
             </th>
 

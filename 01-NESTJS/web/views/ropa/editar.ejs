@@ -1,0 +1,151 @@
+<%- include('../comunes/cabecera') %>
+<div class='container'>
+    <!--  !== ! = =      -->
+    <% const existeMensaje = typeof datos.mensaje !== 'undefined'%>
+    <% if(existeMensaje){%>
+        <div class="alert alert-success" role="alert">
+            <%= datos.mensaje%>
+        </div>
+    <%}%>
+    <h1>Editar prenda de ropa</h1>
+    <form action='/ropa/editar-ropa-formulario/<%=datos.ropa.id%>' method='post'>
+
+        <!-- TIPO DE ROPA -->
+        <div class="mb-3">
+            <label for="TipoRopa" class="form-label">
+                Tipo de Ropa *
+            </label>
+            <input
+                    value="<%=datos.ropa.tipoRopa%>"
+                   type="text"
+                   name="tipoRopa"
+                   class="form-control"
+                   id="tipoRopa"
+                   aria-describedby="ayudatipoRopa">
+            <div id="ayudatipoRopa" class="form-text">
+                Ingrese el tipo de ropa.
+            </div>
+        </div>
+        <!-- TALLA-->
+        <div class="mb-3">
+            <label for="talla" class="form-label">
+                Talla
+            </label>
+            <input
+                   type="text"
+                   name="talla"
+                   class="form-control"
+                   id="talla"
+                   value="<%=datos.ropa.talla%>"
+                   aria-describedby="ayudatalla">
+            <div id="ayudatalla" class="form-text">
+                Ingrese la talla.
+            </div>
+        </div>
+
+        <!-- MARCA -->
+        <div class="mb-3">
+            <label for="marca" class="form-label">
+                Marca
+            </label>
+            <input
+                   type="text"
+                   name="marca"
+                   class="form-control"
+                   id="marca"
+                   value="<%=datos.ropa.marca%>"
+                   aria-describedby="ayudamarca">
+            <div id="ayudamarca" class="form-text">
+                Ingrese la marca
+            </div>
+        </div>
+
+        <!-- SEXO -->
+        <div class="mb-3">
+            <label for="sexo" class="form-label">
+                Para:
+            </label>
+            <input
+                   type="text"
+                   name="sexo"
+                   class="form-control"
+                   id="sexo"
+                   value="<%=datos.ropa.sexo%>"
+                   aria-describedby="ayudasexo">
+            <div id="ayudasexo" class="form-text">
+                Ropa para:
+            </div>
+        </div>
+
+        <!-- COLOR -->
+        <div class="mb-3">
+            <label for="color" class="form-label">
+                Color*
+            </label>
+            <input
+                   type="text"
+                   name="color"
+                   class="form-control"
+                   id="color"
+                   value="<%=datos.ropa.color%>"
+                   aria-describedby="ayudacolor">
+            <div id="ayudacolor" class="form-text">
+                Ingrese el color.
+            </div>
+        </div>
+
+        <!-- PRECIO -->
+        <div class="mb-3">
+            <label for="precio" class="form-label">
+                precio
+            </label>
+            <input
+                   type="text"
+                   name="precio"
+                   class="form-control"
+                   id="precio"
+                   value="<%=datos.ropa.precio%>"
+                   aria-describedby="ayudaprecio">
+            <div id="ayudaprecio" class="form-text">
+                Ingrese el precio.
+            </div>
+        </div>
+
+        <!-- STOCK -->
+        <div class="mb-3">
+            <label for="stock" class="form-label">
+                stock
+            </label>
+            <input
+                   type="text"
+                   name="stock"
+                   class="form-control"
+                   id="stock"
+                   value="<%=datos.ropa.stock%>"
+                   aria-describedby="ayudastock">
+            <div id="ayudastock" class="form-text">
+                Ingrese el stock.
+            </div>
+        </div>
+
+        <!-- FECHA -->
+        <div class="mb-3">
+            <label for="fecha" class="form-label">
+                fecha
+            </label>
+            <input
+                    type="text"
+                    name="fecha"
+                    class="form-control"
+                    id="fecha"
+                    value="<%=datos.ropa.fecha%>"
+                    aria-describedby="ayudafecha">
+            <div id="ayudafecha" class="form-text">
+                Ingrese fecha.
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Actualizar</button>
+    </form>
+</div>
+<%- include('../comunes/footer') %>

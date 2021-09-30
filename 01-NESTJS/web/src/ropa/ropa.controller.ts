@@ -51,6 +51,7 @@ export class RopaController {
   //***** VISTAS *******
   @Get('vista-crear')
   vistaCrear(@Res() response, @Query() queryParams) {
+    console.log('VISTA CREAR');
     response.render('ropa/crear', {
       datos: {
         mensaje: queryParams.mensaje,
@@ -79,9 +80,8 @@ export class RopaController {
           '?mensaje=Se ingreso exitosamente la prenda ' +
           bodyParams.tipoRopa,
       );
-
-      console.log(ropaRes);
       console.log('ROPA FORMULARIO');
+      console.log(ropaRes);
     } catch (e) {
       console.log(e);
       throw new InternalServerErrorException(e);
@@ -99,6 +99,89 @@ export class RopaController {
     } catch (e) {
       console.log(e);
       throw new InternalServerErrorException(e);
+    }
+  }
+
+  @Post('vista-editar/:idRopa')
+  async vistaActualizar(@Res() response, @Param() parametrosRuta) {
+    try {
+      const respuesta = await this.ropaService.buscarUno(
+        +parametrosRuta.idRopa,
+      );
+      console.log('VISTA EDITAR');
+      console.log(respuesta);
+      response.render('ropa/editar', {
+        datos: {
+          ropa: respuesta,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+      throw new InternalServerErrorException('Error');
+    }
+  }
+  @Post('editar-ropa-formulario/:idRopa')
+  async editarRopa(
+    @Param() parametrosRuta,
+    @Body() bodyParams,
+    @Res() response,
+  ) {
+    let sexo = false;
+    if (bodyParams.sexo == 'Femenino') {
+      sexo = true;
+    }
+    console.log('EDITAR');
+    const id = +parametrosRuta.idRopa;
+    const fecha = new Date();
+
+    const ropaCrearDto = new RopaCrearDto();
+    ropaCrearDto.tipoRopa = bodyParams.tipoRopa;
+    ropaCrearDto.talla = bodyParams.talla;
+    ropaCrearDto.marca = bodyParams.marca;
+    ropaCrearDto.sexo = sexo;
+    ropaCrearDto.color = bodyParams.color;
+    ropaCrearDto.precio = Number(bodyParams.precio);
+    ropaCrearDto.stock = Number(bodyParams.stock);
+    ropaCrearDto.fecha = new Date(bodyParams.fecha);
+    console.log(typeof ropaCrearDto.precio);
+    console.log(typeof ropaCrearDto.stock);
+    console.log(typeof ropaCrearDto.sexo);
+    console.log(typeof ropaCrearDto.fecha);
+    console.log(ropaCrearDto.sexo);
+    console.log(ropaCrearDto.fecha);
+    try {
+      const errores = await validate(ropaCrearDto);
+      console.log(errores.length);
+      if (errores.length > 0) {
+        console.error('Error', errores);
+        return response.redirect(
+          '/ropa/lista-ropa/' + '?mensaje=Error validando datos',
+        );
+      } else {
+        const data = {
+          tipoRopa: ropaCrearDto.tipoRopa,
+          talla: ropaCrearDto.talla,
+          marca: ropaCrearDto.marca,
+          sexo: ropaCrearDto.sexo,
+          color: ropaCrearDto.color,
+          precio: Number(ropaCrearDto.precio),
+          stock: Number(ropaCrearDto.stock),
+          fecha: new Date(ropaCrearDto.fecha),
+        };
+        await this.ropaService.actualizarUno({
+          id: id,
+          data: data,
+        });
+        response.redirect(
+          '/ropa/lista-ropa' +
+            '?mensaje= Se actualizó exitosamente la prenda ' +
+            '' +
+            bodyParams.tipoRopa,
+        );
+      }
+    } catch (e) {
+      console.error({ error: e, mensaje: 'Errores en editar la prenda' });
+      throw new InternalServerErrorException('error de servidor');
     }
   }
 

@@ -30,8 +30,6 @@ export class RopaCrearDto {
 
   @IsOptional()
   @IsBoolean()
-  @MinLength(3)
-  @MaxLength(10)
   sexo: boolean;
 
   @IsOptional()
@@ -42,16 +40,12 @@ export class RopaCrearDto {
 
   @IsOptional()
   @IsNumber()
-  @MinLength(3)
-  @MaxLength(10)
   precio: number;
 
   @IsOptional()
   @IsNumber()
-  @MinLength(3)
-  @MaxLength(10)
   stock: number;
 
-  @IsEmpty()
+  @IsOptional()
   fecha: Date;
 }

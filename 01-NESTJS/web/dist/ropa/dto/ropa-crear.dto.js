@@ -37,8 +37,6 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsBoolean)(),
-    (0, class_validator_1.MinLength)(3),
-    (0, class_validator_1.MaxLength)(10),
     __metadata("design:type", Boolean)
 ], RopaCrearDto.prototype, "sexo", void 0);
 __decorate([
@@ -51,19 +49,15 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.MinLength)(3),
-    (0, class_validator_1.MaxLength)(10),
     __metadata("design:type", Number)
 ], RopaCrearDto.prototype, "precio", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.MinLength)(3),
-    (0, class_validator_1.MaxLength)(10),
     __metadata("design:type", Number)
 ], RopaCrearDto.prototype, "stock", void 0);
 __decorate([
-    (0, class_validator_1.IsEmpty)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Date)
 ], RopaCrearDto.prototype, "fecha", void 0);
 exports.RopaCrearDto = RopaCrearDto;
